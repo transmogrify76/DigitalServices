@@ -51,7 +51,7 @@ const HomePage = () => {
           {/* Fuel */}
           <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300">
             <img
-              src=""
+              src="https://blog.feniceenergy.com/wp-content/uploads/2024/05/solar-energy-innovations-west-bengal.jpg"
               alt="Fuel Consumption"
               className="w-full h-40 object-cover rounded-md"
             />
@@ -63,7 +63,7 @@ const HomePage = () => {
           {/* Gas */}
           <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300">
             <img
-              src=""
+              src="https://etimg.etb2bimg.com/photo/113867530.cms"
               alt="Gas Usage"
               className="w-full h-40 object-cover rounded-md"
             />

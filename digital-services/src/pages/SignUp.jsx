@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import Navbar from '../components/Navbar'; 
+import Footer from '../components/Footer';
+
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -29,31 +32,7 @@ const SignUp = () => {
 
   return (
     <div className="bg-blue-50 min-h-screen">
-      {/* Header Section */}
-      <header className="bg-blue-800 text-white py-6">
-        <div className="container mx-auto flex justify-between items-center px-4">
-          <div className="flex items-center space-x-3">
-            {/* Replace with your official logo */}
-            <img
-              src="https://via.placeholder.com/150x50?text=Gov+Logo"
-              alt="Government Logo"
-              className="h-12"
-            />
-            <h1 className="text-3xl font-semibold">Energy Tracking Services</h1>
-          </div>
-          <nav className="space-x-8">
-            <a href="#home" className="hover:text-blue-200">Home</a>
-            <button
-              onClick={() => window.location.href='/login'}
-              className="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700"
-            >
-              Login/SignUp
-            </button>
-          </nav>
-        </div>
-      </header>
-
-      {/* SignUp Form Section */}
+      <Navbar /> 
       <section className="container mx-auto py-16 px-4">
         <div className="w-full max-w-xl p-8 bg-white rounded-lg shadow-lg border border-blue-200 mx-auto">
           <h2 className="text-2xl font-semibold text-center text-blue-800 mb-6">Register for Digital Services</h2>
@@ -192,11 +171,7 @@ const SignUp = () => {
       </section>
 
       {/* Footer Section */}
-      <footer className="bg-blue-800 text-white py-6 mt-12">
-        <div className="container mx-auto text-center">
-          <p>&copy; 2024 Energy Tracking Services. All Rights Reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

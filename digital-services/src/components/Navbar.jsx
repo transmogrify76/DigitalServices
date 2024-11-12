@@ -4,21 +4,21 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="bg-blue-800 text-white py-6">
+    <header className="bg-blue-800 text-white py-2">
       <div className="container mx-auto flex justify-between items-center px-4">
         {/* Left Section: Logo and Title */}
         <div className="flex items-center space-x-3">
           {/* Official Logo */}
           <img
-            src="https://via.placeholder.com/150x50?text=Gov+Logo"
+            src="https://upload.wikimedia.org/wikipedia/en/thumb/6/66/Emblem_of_West_Bengal_%282018-present%29.svg/800px-Emblem_of_West_Bengal_%282018-present%29.svg.png"
             alt="Government Logo"
-            className="h-12"
+            className="h-20"
           />
           <h1 className="text-3xl font-semibold">Energy Tracking Services</h1>
         </div>
 
         {/* Right Section: Navigation Links */}
-        <nav className="space-x-8 hidden md:flex">
+        <nav className="space-x-13 hidden md:flex">
           {/* SignUp/Login Button */}
           <button
             onClick={() => window.location.href='/signup'}
