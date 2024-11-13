@@ -1,20 +1,20 @@
 import React, { useState } from "react";
-import Navbar from '../components/Navbar'; 
+import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phoneNumber: "",
-    aadharNumber: "",
-    panNumber: "",
+    password: "",
+    phone_number: "",
+    aadhar_card_number: "",
+    pan: "",
     address: "",
+    pin_code: "",
     occupation: "",
-    annualIncome: "",
-    maritalStatus: "",
-    familyMembers: "",
+    annual_income_bar: "",
+    martial_status: "",  
   });
 
   const handleChange = (e) => {
@@ -25,152 +25,96 @@ const SignUp = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted", formData);
+    
+    // Log API endpoint and API key to confirm values are correctly loaded
+    console.log("API Endpoint:", process.env.REACT_APP_API_ENDPOINT);
+    console.log("API Key:", process.env.REACT_APP_API_KEY);
+    
+    try {
+      const apiUrl = `${process.env.REACT_APP_API_ENDPOINT}/users/signup`;
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "API-Key": process.env.REACT_APP_API_KEY,
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Form submitted successfully", result);
+      } else {
+        const errorData = await response.json();
+        console.error("Submission error:", errorData.message);
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+    }
   };
 
   return (
-    <div className="bg-blue-50 min-h-screen">
-      <Navbar /> 
-      <section className="container mx-auto py-16 px-4">
-        <div className="w-full max-w-xl p-8 bg-white rounded-lg shadow-lg border border-blue-200 mx-auto">
-          <h2 className="text-2xl font-semibold text-center text-blue-800 mb-6">Register for Digital Services</h2>
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div>
-              <label className="block text-sm font-medium text-blue-700">Name</label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="w-full mt-1 p-2 border border-blue-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-blue-700">Email</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full mt-1 p-2 border border-blue-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-blue-700">Phone Number</label>
-              <input
-                type="tel"
-                name="phoneNumber"
-                value={formData.phoneNumber}
-                onChange={handleChange}
-                className="w-full mt-1 p-2 border border-blue-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-blue-700">Aadhar Number</label>
-              <input
-                type="text"
-                name="aadharNumber"
-                value={formData.aadharNumber}
-                onChange={handleChange}
-                className="w-full mt-1 p-2 border border-blue-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-blue-700">PAN Number</label>
-              <input
-                type="text"
-                name="panNumber"
-                value={formData.panNumber}
-                onChange={handleChange}
-                className="w-full mt-1 p-2 border border-blue-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-blue-700">Address</label>
-              <input
-                type="text"
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-                className="w-full mt-1 p-2 border border-blue-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-blue-700">Occupation</label>
-              <input
-                type="text"
-                name="occupation"
-                value={formData.occupation}
-                onChange={handleChange}
-                className="w-full mt-1 p-2 border border-blue-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-blue-700">Annual Income</label>
-              <input
-                type="number"
-                name="annualIncome"
-                value={formData.annualIncome}
-                onChange={handleChange}
-                className="w-full mt-1 p-2 border border-blue-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-blue-700">Marital Status</label>
-              <select
-                name="maritalStatus"
-                value={formData.maritalStatus}
-                onChange={handleChange}
-                className="w-full mt-1 p-2 border border-blue-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                required
+    <div className="bg-gradient-to-t from-blue-100 to-blue-50 min-h-screen">
+      <Navbar />
+      <section className="container mx-auto py-28 px-10">
+        <div className="w-full max-w-2xl p-8 bg-white rounded-lg shadow-2xl border border-blue-200 mx-auto transform transition-all duration-500 hover:scale-105 overflow-hidden">
+          <h2 className="text-3xl font-semibold text-center text-blue-800 mb-8">Create Your Account</h2>
+          <div className="overflow-y-auto max-h-[450px]">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {["name", "email", "password", "phone_number", "aadhar_card_number", "pan", "address", "pin_code", "occupation"].map((field) => (
+                <div key={field}>
+                  <label className="block text-sm font-medium text-blue-700 capitalize">{field.replace('_', ' ')}</label>
+                  <input
+                    type={field === "password" ? "password" : "text"}
+                    name={field}
+                    value={formData[field]}
+                    onChange={handleChange}
+                    className="w-full mt-1 p-3 border border-blue-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                    required
+                  />
+                </div>
+              ))}
+              <div>
+                <label className="block text-sm font-medium text-blue-700">Annual Income</label>
+                <input
+                  type="number"
+                  name="annual_income_bar"
+                  value={formData.annual_income_bar}
+                  onChange={handleChange}
+                  className="w-full mt-1 p-3 border border-blue-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-blue-700">Marital Status</label>
+                <select
+                  name="martial_status"
+                  value={formData.martial_status}
+                  onChange={handleChange}
+                  className="w-full mt-1 p-3 border border-blue-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                  required
+                >
+                  <option value="">Select</option>
+                  <option value="Unmarried">Unmarried</option>
+                  <option value="Married">Married</option>
+                  <option value="Divorced">Divorced</option>
+                  <option value="Judicially Separated">Judicially Separated</option>
+                  <option value="Widowed">Widowed</option>
+                </select>
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-blue-700 text-white py-3 rounded-md hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-300"
               >
-                <option value="">Select</option>
-                <option value="single">Single</option>
-                <option value="married">Married</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-blue-700">Number of Family Members</label>
-              <input
-                type="number"
-                name="familyMembers"
-                value={formData.familyMembers}
-                onChange={handleChange}
-                className="w-full mt-1 p-2 border border-blue-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                required
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="w-full bg-blue-700 text-white py-2 rounded-md hover:bg-blue-800 focus:outline-none"
-            >
-              Register
-            </button>
-          </form>
+                Register Now
+              </button>
+            </form>
+          </div>
         </div>
       </section>
 
-      {/* Footer Section */}
       <Footer />
     </div>
   );
