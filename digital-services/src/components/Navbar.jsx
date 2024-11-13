@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Check if user is logged in by looking for a token in local storage
+  useEffect(() => {
+    const userToken = localStorage.getItem('user'); // replace 'user' with the actual key if different
+    setIsLoggedIn(!!userToken); // true if token exists, false otherwise
+  }, []);
 
   return (
     <header className="bg-blue-800 text-white py-2">
@@ -19,13 +26,15 @@ const Navbar = () => {
 
         {/* Right Section: Navigation Links */}
         <nav className="space-x-13 hidden md:flex">
-          {/* SignUp/Login Button */}
-          <button
-            onClick={() => window.location.href='/signup'}
-            className="bg-blue-600 text-white py-2 px-10 rounded-md hover:bg-blue-700"
-          >
-            SignUp
-          </button>
+          {/* Conditionally Render SignUp/Login Button */}
+          {!isLoggedIn && (
+            <button
+              onClick={() => window.location.href = '/signup'}
+              className="bg-blue-600 text-white py-2 px-10 rounded-md hover:bg-blue-700"
+            >
+              SignUp
+            </button>
+          )}
         </nav>
 
         {/* Mobile Menu Toggle */}
@@ -44,12 +53,14 @@ const Navbar = () => {
         <div className="bg-blue-700 text-white py-4 md:hidden">
           <div className="container mx-auto">
             <nav className="space-y-4">
-              <button
-                onClick={() => window.location.href='/signup'}
-                className="w-full text-left py-2 px-6 rounded-md hover:bg-blue-600"
-              >
-                SignUp
-              </button>
+              {!isLoggedIn && (
+                <button
+                  onClick={() => window.location.href = '/signup'}
+                  className="w-full text-left py-2 px-6 rounded-md hover:bg-blue-600"
+                >
+                  SignUp
+                </button>
+              )}
             </nav>
           </div>
         </div>

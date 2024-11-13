@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';  // Use useNavigate instead of u
 import Navbar from '../components/Navbar'; 
 import Footer from '../components/Footer';
 
+
 const HomePage = () => {
   const navigate = useNavigate();  // Initialize navigate function
 
@@ -29,7 +30,10 @@ const HomePage = () => {
       <section className="bg-blue-900 text-white text-center py-24">
         <h2 className="text-4xl font-bold">Track Your Daily Energy Consumption</h2>
         <p className="mt-4 text-lg">Stay informed about your usage and take control of your resources for a sustainable future.</p>
-        <button className="mt-8 bg-blue-600 py-3 px-6 rounded-md text-white text-lg hover:bg-blue-700">
+        <button
+          className="mt-8 bg-blue-600 py-3 px-6 rounded-md text-white text-lg hover:bg-blue-700"
+          onClick={() => navigate('/login')}
+        >
           Start Tracking Now
         </button>
       </section>
