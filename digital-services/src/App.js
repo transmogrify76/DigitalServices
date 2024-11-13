@@ -8,6 +8,7 @@ import WaterAwareness from './pages/WaterAwareness';
 import ElectricityAwareness from './pages/ElectricityAwareness';
 import FuelAwareness from './pages/FuelAwareness';
 import GasCylinderAwareness from './pages/GasCylinderAwareness';
+import Dashboard from './pages/Dashboard';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/electricity" element={< ElectricityAwareness/>} />
         <Route path="/fuel" element={< FuelAwareness/>} />
         <Route path="/gas" element={< GasCylinderAwareness/>} />
+        <Route path="/dashboard" element={< Dashboard/>} />
       </Routes>
     </Router>
   );
