@@ -12,12 +12,40 @@ const FuelAwareness = () => {
           <p className="text-center text-green-600 mb-6">
             Fuel is a vital resource for transportation and industry, but excessive use can lead to environmental harm. Learn how we can reduce fuel consumption and promote sustainable alternatives.
           </p>
+
+          {/* Image Section */}
+          <div className="flex justify-center mb-8">
+            <img 
+              src="https://www.indiacelebrating.com/wp-content/uploads/Oil-and-Gas-Conservation-Week-and-Fortnight.jpg" 
+              alt="Fuel Conservation" 
+              className="w-full max-w-md rounded-xl shadow-lg"
+            />
+          </div>
+
           <div className="space-y-8">
             <section className="space-y-4">
               <h3 className="text-2xl font-semibold text-green-700">Why Reducing Fuel Consumption is Important?</h3>
               <p className="text-green-600">
                 Reducing fuel consumption helps mitigate climate change, reduce pollution, and conserve non-renewable resources. It also helps reduce fuel costs, benefiting both individuals and businesses.
               </p>
+            </section>
+
+            {/* Interactive Slider */}
+            <section className="space-y-4">
+              <h3 className="text-2xl font-semibold text-green-700">How Much Fuel Are You Consuming?</h3>
+              <div className="flex flex-col items-center">
+                <label htmlFor="fuel-slider" className="mb-2 text-green-600">Adjust the slider to estimate your monthly fuel consumption:</label>
+                <input 
+                  id="fuel-slider" 
+                  type="range" 
+                  min="10" 
+                  max="500" 
+                  step="10" 
+                  defaultValue="250" 
+                  className="w-64 h-2 bg-green-200 rounded-lg"
+                />
+                <p className="mt-2 text-green-600">Your estimated fuel consumption: <strong>250 liters/month</strong></p>
+              </div>
             </section>
 
             <section className="space-y-4">

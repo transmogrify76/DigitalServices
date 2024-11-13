@@ -22,9 +22,9 @@ const Navbar = () => {
           {/* SignUp/Login Button */}
           <button
             onClick={() => window.location.href='/signup'}
-            className="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700"
+            className="bg-blue-600 text-white py-2 px-10 rounded-md hover:bg-blue-700"
           >
-            SignUp/Login
+            SignUp
           </button>
         </nav>
 
@@ -48,7 +48,7 @@ const Navbar = () => {
                 onClick={() => window.location.href='/signup'}
                 className="w-full text-left py-2 px-6 rounded-md hover:bg-blue-600"
               >
-                SignUp/Login
+                SignUp
               </button>
             </nav>
           </div>

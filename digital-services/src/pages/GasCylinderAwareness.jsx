@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const GasCylinderAwareness = () => {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"; // example script URL
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
   return (
     <div className="bg-gradient-to-r from-yellow-100 via-yellow-300 to-yellow-500 min-h-screen flex flex-col">
       <Navbar />
@@ -15,6 +26,9 @@ const GasCylinderAwareness = () => {
           <div className="space-y-8">
             <section className="space-y-4">
               <h3 className="text-2xl font-semibold text-yellow-700">Why Is Gas Cylinder Safety Important?</h3>
+              <div className="flex justify-center">
+                <img src="https://static.vecteezy.com/system/resources/previews/013/704/282/original/gas-cylinder-sign-empty-cylinder-storage-area-with-cylinders-chained-symbol-free-vector.jpg" alt="Gas Cylinder Safety" className="rounded-lg shadow-lg hover:scale-105 transition-all duration-300" />
+              </div>
               <p className="text-yellow-600">
                 Gas cylinders contain highly flammable materials. Ensuring proper handling, storage, and usage is crucial for preventing accidents like leaks, fires, or explosions. Awareness is key to protecting yourself and those around you.
               </p>
@@ -52,6 +66,9 @@ const GasCylinderAwareness = () => {
                 <li>Do not use electrical devices or phones in the affected area.</li>
                 <li>If safe, move the cylinder to an open area away from any ignition sources.</li>
               </ul>
+              <div className="flex justify-center">
+                <img src="https://images.slurrp.com/prodarticles/r2l6we74ujs.webp?impolicy=slurrp-20210601&width=1200&height=900&q=75" alt="Emergency Procedure" className="rounded-lg shadow-lg hover:scale-105 transition-all duration-300" />
+              </div>
             </section>
 
             <section className="space-y-4">
@@ -59,9 +76,10 @@ const GasCylinderAwareness = () => {
               <p className="text-yellow-600">
                 By following safety guidelines and spreading awareness, we can prevent accidents. Educate your family, friends, and community members about the importance of gas cylinder safety.
               </p>
-              <button className="w-full bg-yellow-700 text-white py-3 rounded-md hover:bg-yellow-800 focus:outline-none focus:ring-4 focus:ring-yellow-300">
+              <button className="w-full bg-yellow-700 text-white py-3 rounded-md hover:bg-yellow-800 focus:outline-none focus:ring-4 focus:ring-yellow-300 transition-all duration-300">
                 Join the Movement for Gas Safety
               </button>
+              
             </section>
           </div>
         </div>
