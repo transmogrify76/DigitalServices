@@ -56,11 +56,11 @@ const SignUp = () => {
   };
 
   return (
-    <div className="bg-gradient-to-t from-blue-100 to-blue-50 min-h-screen">
+    <div className="bg-gradient-to-r from-blue-100 via-blue-300 to-blue-500 min-h-screen flex flex-col">
       <Navbar />
-      <section className="container mx-auto py-28 px-10">
-        <div className="w-full max-w-2xl p-8 bg-white rounded-lg shadow-2xl border border-blue-200 mx-auto transform transition-all duration-500 hover:scale-105 overflow-hidden">
-          <h2 className="text-3xl font-semibold text-center text-blue-800 mb-8">Create Your Account</h2>
+      <section className="container mx-auto py-12 px-6 flex-grow flex flex-col items-center justify-center">
+        <div className="w-full max-w-lg bg-white rounded-xl shadow-xl p-6 sm:p-10 space-y-6 overflow-hidden">
+          <h2 className="text-3xl font-bold text-center text-blue-800 mb-6">Create Your Account</h2>
           <div className="overflow-y-auto max-h-[450px]">
             <form onSubmit={handleSubmit} className="space-y-6">
               {["name", "email", "password", "phone_number", "aadhar_card_number", "pan", "address", "pin_code", "occupation"].map((field) => (
@@ -106,7 +106,7 @@ const SignUp = () => {
               </div>
               <button
                 type="submit"
-                className="w-full bg-blue-700 text-white py-3 rounded-md hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-300"
+                className="w-full bg-blue-700 text-white py-3 rounded-md hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
               >
                 Register Now
               </button>
@@ -114,7 +114,6 @@ const SignUp = () => {
           </div>
         </div>
       </section>
-
       <Footer />
     </div>
   );
