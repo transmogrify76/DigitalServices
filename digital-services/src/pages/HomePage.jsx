@@ -1,15 +1,29 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';  // Use useNavigate instead of useHistory
 import Navbar from '../components/Navbar'; 
 import Footer from '../components/Footer';
 
 const HomePage = () => {
+  const navigate = useNavigate();  // Initialize navigate function
+
+  // Handlers for button clicks
+  const handleWaterClick = () => {
+    navigate('/water');  // Redirect to /water page
+  };
+  const handleElectricityClick = () => {
+    navigate('/electricity');  // Redirect to /electricity page
+  };
+  const handleFuelClick = () => {
+    navigate('/fuel');  // Redirect to /fuel page
+  };
+  const handleGasClick = () => {
+    navigate('/gas');  // Redirect to /gas page
+  };
+
   return (
     <div className="bg-blue-50 min-h-screen">
       {/* Navbar */}
       <Navbar /> 
-
-      {/* Header Section */}
-      
 
       {/* Hero Section */}
       <section className="bg-blue-900 text-white text-center py-24">
@@ -33,7 +47,12 @@ const HomePage = () => {
             />
             <h3 className="text-xl font-semibold mt-4 text-blue-800">Water</h3>
             <p className="text-gray-600 mt-2">Monitor your daily water consumption and track usage trends.</p>
-            <button className="mt-4 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">Track Water</button>
+            <button 
+              onClick={handleWaterClick}  // Attach the handleWaterClick function to the button
+              className="mt-4 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700"
+            >
+              Know More
+            </button>
           </div>
 
           {/* Electricity */}
@@ -45,7 +64,12 @@ const HomePage = () => {
             />
             <h3 className="text-xl font-semibold mt-4 text-blue-800">Electricity</h3>
             <p className="text-gray-600 mt-2">Track your energy consumption for a more efficient use of electricity.</p>
-            <button className="mt-4 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">Track Electricity</button>
+            <button 
+              onClick={handleElectricityClick}  // Attach the handleElectricityClick function to the button
+              className="mt-4 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700"
+            >
+              Know More
+            </button>
           </div>
 
           {/* Fuel */}
@@ -57,7 +81,12 @@ const HomePage = () => {
             />
             <h3 className="text-xl font-semibold mt-4 text-blue-800">Fuel</h3>
             <p className="text-gray-600 mt-2">Track fuel consumption and optimize your vehicle's usage.</p>
-            <button className="mt-4 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">Track Fuel</button>
+            <button 
+              onClick={handleFuelClick}  // Attach the handleFuelClick function to the button
+              className="mt-4 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700"
+            >
+              Know More
+            </button>
           </div>
 
           {/* Gas */}
@@ -69,7 +98,12 @@ const HomePage = () => {
             />
             <h3 className="text-xl font-semibold mt-4 text-blue-800">Gas</h3>
             <p className="text-gray-600 mt-2">Keep track of your household gas consumption for better savings.</p>
-            <button className="mt-4 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">Track Gas</button>
+            <button 
+              onClick={handleGasClick}  // Attach the handleGasClick function to the button
+              className="mt-4 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700"
+            >
+              Know More
+            </button>
           </div>
         </div>
       </section>
