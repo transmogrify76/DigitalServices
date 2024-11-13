@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Use useNavigate for React Router v6
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -14,8 +15,10 @@ const SignUp = () => {
     pin_code: "",
     occupation: "",
     annual_income_bar: "",
-    martial_status: "",  
+    martial_status: "",
   });
+
+  const navigate = useNavigate(); // Initialize navigate from useNavigate
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,11 +30,11 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Log API endpoint and API key to confirm values are correctly loaded
     console.log("API Endpoint:", process.env.REACT_APP_API_ENDPOINT);
     console.log("API Key:", process.env.REACT_APP_API_KEY);
-    
+
     try {
       const apiUrl = `${process.env.REACT_APP_API_ENDPOINT}/users/signup`;
       const response = await fetch(apiUrl, {
@@ -42,10 +45,13 @@ const SignUp = () => {
         },
         body: JSON.stringify(formData),
       });
-  
+
       if (response.ok) {
         const result = await response.json();
         console.log("Form submitted successfully", result);
+
+        // Redirect user to login page after successful signup
+        navigate("/login"); // Use navigate to redirect
       } else {
         const errorData = await response.json();
         console.error("Submission error:", errorData.message);
