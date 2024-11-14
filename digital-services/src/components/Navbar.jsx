@@ -1,24 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn ] = useState(false);
   const location = useLocation();
 
-  useEffect(() => {
-    const userToken = localStorage.getItem('user'); 
-    setIsLoggedIn(!!userToken); 
-  }, []);
-  
   const isHomeOrLoginPage = location.pathname === '/home' || location.pathname === '/login' || location.pathname === '/';
   const isDashboardPage = location.pathname === '/dashboard';
-
-
   return (
     <header className="bg-blue-800 text-white py-2">
       <div className="container mx-auto flex justify-between items-center px-4">
-        {/* Left Section: Logo and Title */}
         <div className="flex items-center space-x-3">
           <Link to="/home">
             <img
@@ -29,8 +21,6 @@ const Navbar = () => {
           </Link>
           <h1 className="text-3xl font-semibold">Energy Tracking Services</h1>
         </div>
-
-        {/* Right Section: Navigation Links */}
         <nav className="space-x-13 hidden md:flex items-center">
           {!isLoggedIn && isHomeOrLoginPage && (
             <button
@@ -40,9 +30,8 @@ const Navbar = () => {
               SignUp
             </button>
           )}
-
           {isLoggedIn && isDashboardPage && (
-            <Link to="/myprofile" className="text-white hover:text-gray-200">
+            <Link to="/profile" className="text-white hover:text-gray-200">
               <img
                 src="https://cdn-icons-png.flaticon.com/128/3237/3237472.png"
                 alt="Profile"
@@ -51,7 +40,6 @@ const Navbar = () => {
             </Link>
           )}
         </nav>
-
         <div className="md:hidden">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -61,7 +49,6 @@ const Navbar = () => {
           </button>
         </div>
       </div>
-
       {isMenuOpen && (
         <div className="bg-blue-700 text-white py-4 md:hidden">
           <div className="container mx-auto">

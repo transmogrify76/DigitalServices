@@ -89,7 +89,7 @@ const EditProfile = () => {
       });
 
       if (response.ok) {
-        const result = await response.json();
+        
         alert("Profile updated successfully!");
         navigate("/myprofile");
       } else {
