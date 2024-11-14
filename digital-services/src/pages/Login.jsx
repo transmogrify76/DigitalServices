@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import Navbar from '../components/Navbar'; 
 import Footer from '../components/Footer';
 
@@ -7,6 +8,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const navigate = useNavigate(); // Initialize navigate
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,9 +21,6 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("API Endpoint:", process.env.REACT_APP_API_ENDPOINT);
-    console.log("API Key:", process.env.REACT_APP_API_KEY);
-    
     try {
       const apiUrl = `${process.env.REACT_APP_API_ENDPOINT}/users/login`;
       const response = await fetch(apiUrl, {
@@ -36,6 +35,7 @@ const Login = () => {
       if (response.ok) {
         const result = await response.json();
         console.log("Login successful:", result);
+        navigate("/dashboard"); // Redirect to dashboard after successful login
       } else {
         const errorData = await response.json();
         console.error("Login error:", errorData.message);
