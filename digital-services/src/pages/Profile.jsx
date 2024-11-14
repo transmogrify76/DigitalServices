@@ -18,7 +18,7 @@ const Profile = () => {
       // Fetch user data from the backend API using the token
       const fetchUserData = async () => {
         try {
-          const apiUrl = `${process.env.REACT_APP_API_ENDPOINT}/users/me`; // Your API endpoint
+          const apiUrl = `${process.env.REACT_APP_API_ENDPOINT}/users/profile`; // Your API endpoint
           const response = await fetch(apiUrl, {
             method: "GET",
             headers: {

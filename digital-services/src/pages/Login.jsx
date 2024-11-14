@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom"; 
 import Navbar from '../components/Navbar'; 
 import Footer from '../components/Footer';
 
@@ -8,7 +8,7 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate(); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,7 +20,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const apiUrl = `${process.env.REACT_APP_API_ENDPOINT}/users/login`;
       const response = await fetch(apiUrl, {
@@ -31,15 +31,23 @@ const Login = () => {
         },
         body: JSON.stringify(formData),
       });
-
+  
       if (response.ok) {
-        const result = await response.json();
-        console.log("Login successful:", result);
         
-        // Assuming the token is in result.token, adjust if the response structure is different
-        localStorage.setItem('user', result.token); // Store the token in localStorage
-        
-        navigate("/dashboard"); // Redirect to dashboard after successful login
+        const token = response.headers.get('Authorization');
+        console.log("Authorization Token:", token);  
+  
+        if (token) {
+          
+          const tokenValue = token.split(' ')[1];  // Get the token after "Bearer"
+          localStorage.setItem('user', tokenValue); // Store the token in localStorage
+          console.log("Token successfully stored in localStorage");
+  
+          // Redirect to dashboard after successful login
+          navigate("/dashboard");
+        } else {
+          console.error("Token not found in Authorization header.");
+        }
       } else {
         const errorData = await response.json();
         console.error("Login error:", errorData.message);
@@ -48,7 +56,8 @@ const Login = () => {
       console.error("Network error:", error);
     }
   };
-
+  
+  
   return (
     <div className="bg-gradient-to-r from-blue-100 via-blue-300 to-blue-500 min-h-screen flex flex-col">
       <Navbar />

@@ -6,19 +6,14 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
 
-  // Check if user is logged in by looking for a token in local storage
   useEffect(() => {
-    const userToken = localStorage.getItem('user'); // replace 'user' with the actual key if different
-    console.log('User Token:', userToken); // Log token value
-    setIsLoggedIn(!!userToken); // true if token exists, false otherwise
+    const userToken = localStorage.getItem('user'); 
+    setIsLoggedIn(!!userToken); 
   }, []);
-
-  // Check if the current route is either "/home" or "/login" or the root route
+  
   const isHomeOrLoginPage = location.pathname === '/home' || location.pathname === '/login' || location.pathname === '/';
   const isDashboardPage = location.pathname === '/dashboard';
 
-  console.log('Current Path:', location.pathname); // Log the current path
-  console.log('Is Dashboard Page:', isDashboardPage); // Log if it's the dashboard page
 
   return (
     <header className="bg-blue-800 text-white py-2">
@@ -47,7 +42,7 @@ const Navbar = () => {
           )}
 
           {isLoggedIn && isDashboardPage && (
-            <Link to="/profile" className="text-white hover:text-gray-200">
+            <Link to="/myprofile" className="text-white hover:text-gray-200">
               <img
                 src="https://cdn-icons-png.flaticon.com/128/3237/3237472.png"
                 alt="Profile"
@@ -57,7 +52,6 @@ const Navbar = () => {
           )}
         </nav>
 
-        {/* Mobile Menu Toggle */}
         <div className="md:hidden">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -68,7 +62,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="bg-blue-700 text-white py-4 md:hidden">
           <div className="container mx-auto">
