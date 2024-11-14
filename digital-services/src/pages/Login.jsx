@@ -35,6 +35,10 @@ const Login = () => {
       if (response.ok) {
         const result = await response.json();
         console.log("Login successful:", result);
+        
+        // Assuming the token is in result.token, adjust if the response structure is different
+        localStorage.setItem('user', result.token); // Store the token in localStorage
+        
         navigate("/dashboard"); // Redirect to dashboard after successful login
       } else {
         const errorData = await response.json();

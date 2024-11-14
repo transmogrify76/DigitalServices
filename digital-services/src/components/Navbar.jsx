@@ -9,6 +9,7 @@ const Navbar = () => {
   // Check if user is logged in by looking for a token in local storage
   useEffect(() => {
     const userToken = localStorage.getItem('user'); // replace 'user' with the actual key if different
+    console.log('User Token:', userToken); // Log token value
     setIsLoggedIn(!!userToken); // true if token exists, false otherwise
   }, []);
 
@@ -16,12 +17,14 @@ const Navbar = () => {
   const isHomeOrLoginPage = location.pathname === '/home' || location.pathname === '/login' || location.pathname === '/';
   const isDashboardPage = location.pathname === '/dashboard';
 
+  console.log('Current Path:', location.pathname); // Log the current path
+  console.log('Is Dashboard Page:', isDashboardPage); // Log if it's the dashboard page
+
   return (
     <header className="bg-blue-800 text-white py-2">
       <div className="container mx-auto flex justify-between items-center px-4">
         {/* Left Section: Logo and Title */}
         <div className="flex items-center space-x-3">
-          {/* Official Logo with Link to Home */}
           <Link to="/home">
             <img
               src="https://upload.wikimedia.org/wikipedia/en/thumb/6/66/Emblem_of_West_Bengal_%282018-present%29.svg/800px-Emblem_of_West_Bengal_%282018-present%29.svg.png"
@@ -32,9 +35,8 @@ const Navbar = () => {
           <h1 className="text-3xl font-semibold">Energy Tracking Services</h1>
         </div>
 
-        {/* Right Section: Navigation Links and Profile Icon */}
-        <div className="flex items-center space-x-4">
-          {/* Conditionally Render SignUp Button */}
+        {/* Right Section: Navigation Links */}
+        <nav className="space-x-13 hidden md:flex items-center">
           {!isLoggedIn && isHomeOrLoginPage && (
             <button
               onClick={() => window.location.href = '/signup'}
@@ -44,22 +46,25 @@ const Navbar = () => {
             </button>
           )}
 
-          {/* Conditionally Render My Profile Icon on the Right */}
           {isLoggedIn && isDashboardPage && (
             <Link to="/profile" className="text-white hover:text-gray-200">
-              <i className="fa fa-user-circle text-3xl" aria-hidden="true"></i>
+              <img
+                src="https://cdn-icons-png.flaticon.com/128/3237/3237472.png"
+                alt="Profile"
+                className="w-8 h-8 rounded-full mr-2"
+              />
             </Link>
           )}
+        </nav>
 
-          {/* Mobile Menu Toggle */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-white"
-            >
-              <i className={`fa ${isMenuOpen ? 'fa-times' : 'fa-bars'} text-3xl`} />
-            </button>
-          </div>
+        {/* Mobile Menu Toggle */}
+        <div className="md:hidden">
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="text-white"
+          >
+            <i className={`fa ${isMenuOpen ? 'fa-times' : 'fa-bars'} text-3xl`} />
+          </button>
         </div>
       </div>
 
@@ -76,10 +81,14 @@ const Navbar = () => {
                   SignUp
                 </button>
               )}
-              {/* Conditionally Render My Profile Icon in Mobile Menu */}
               {isLoggedIn && isDashboardPage && (
                 <Link to="/profile" className="w-full text-left py-2 px-6 rounded-md hover:bg-blue-600 flex items-center">
-                  <i className="fa fa-user-circle text-xl mr-2"></i> My Profile
+                  <img 
+                    src="https://cdn-icons-png.flaticon.com/128/3237/3237472.png" 
+                    alt="Profile" 
+                    className="w-8 h-8 rounded-full mr-2" 
+                  />
+                  
                 </Link>
               )}
             </nav>
