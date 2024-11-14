@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for routing
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const EditProfile = () => {
-  const [userData, setUserData] = useState({
+  const [user_data, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [formData, setFormData] = useState({
     name: "",
     email: "",
-    // Add any other fields you want to allow users to edit
+    occupation: "",
+    address: "",
+    annual_income_bar: "",
+    pin_code: "",
+    aadhar_card_number: "",
+    pan: "",
+    marital_status: "",
   });
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,7 +27,7 @@ const EditProfile = () => {
     } else {
       const fetchUserData = async () => {
         try {
-          const apiUrl = `${process.env.REACT_APP_API_ENDPOINT}/users/me`;
+          const apiUrl = `${process.env.REACT_APP_API_ENDPOINT}/users/profile`;
           const response = await fetch(apiUrl, {
             method: "GET",
             headers: {
@@ -31,7 +38,18 @@ const EditProfile = () => {
 
           if (response.ok) {
             const result = await response.json();
-            setUserData(result);
+            setUserData(result.user_data);
+            setFormData({
+              name: result.user_data.name,
+              email: result.user_data.email,
+              occupation: result.user_data.occupation,
+              address: result.user_data.address,
+              annual_income_bar: result.user_data.annual_income_bar,
+              pin_code: result.user_data.pin_code,
+              aadhar_card_number: result.user_data.aadhar_card_number,
+              pan: result.user_data.pan,
+              marital_status: result.user_data.martial_status,
+            });
           } else {
             console.error("Error fetching user data");
           }
@@ -48,10 +66,10 @@ const EditProfile = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUserData({
-      ...userData,
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: value,
-    });
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -61,31 +79,33 @@ const EditProfile = () => {
     try {
       const apiUrl = `${process.env.REACT_APP_API_ENDPOINT}/users/update`;
       const response = await fetch(apiUrl, {
-        method: "PUT",
+        method: "PATCH",
         headers: {
-          "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
           "API-Key": process.env.REACT_APP_API_KEY,
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(userData),
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        console.log("Profile updated successfully");
-        navigate("/profile");
+        const result = await response.json();
+        alert("Profile updated successfully!");
+        navigate("/myprofile");
       } else {
-        const errorData = await response.json();
-        console.error("Error updating profile:", errorData.message);
+        console.error("Error updating profile");
+        alert("Error updating profile");
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error updating profile:", error);
+      alert("Error updating profile");
     }
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen flex justify-center items-center">
-        <p className="text-lg text-blue-700">Loading...</p>
+      <div className="min-h-screen flex justify-center items-center bg-gradient-to-r from-blue-100 via-blue-300 to-blue-500">
+        <p className="text-lg text-blue-700 font-semibold">Loading...</p>
       </div>
     );
   }
@@ -94,38 +114,93 @@ const EditProfile = () => {
     <div className="bg-gradient-to-r from-blue-100 via-blue-300 to-blue-500 min-h-screen flex flex-col">
       <Navbar />
       <section className="container mx-auto py-12 px-6 flex-grow flex flex-col items-center justify-center">
-        <div className="w-full max-w-lg bg-white rounded-xl shadow-xl p-8 sm:p-12 space-y-6">
-          <h2 className="text-3xl font-bold text-center text-blue-800 mb-6">Edit Profile</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-blue-700">Name</label>
-              <input
-                type="text"
-                name="name"
-                value={userData.name}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-blue-300 rounded-md"
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-blue-700">Email</label>
-              <input
-                type="email"
-                name="email"
-                value={userData.email}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-blue-300 rounded-md"
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-blue-700 text-white py-3 rounded-md hover:bg-blue-800"
-            >
-              Save Changes
-            </button>
-          </form>
+        <div className="w-full max-w-lg bg-white rounded-xl shadow-2xl transform transition-transform hover:scale-105 hover:rotate-3d p-8 sm:p-12 space-y-6 hover:shadow-xl hover:shadow-blue-400 ease-in-out duration-300">
+          <h2 className="text-3xl font-extrabold text-center text-blue-800 mb-6 tracking-wide">Edit Profile</h2>
+          {user_data ? (
+            <form onSubmit={handleSubmit}>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-blue-700">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border rounded-md text-blue-800"
+                    required
+                  />
+                </div>
+               
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-blue-700">Occupation</label>
+                  <input
+                    type="text"
+                    name="occupation"
+                    value={formData.occupation}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border rounded-md text-blue-800"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-blue-700">Address</label>
+                  <input
+                    type="text"
+                    name="address"
+                    value={formData.address}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border rounded-md text-blue-800"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-blue-700">Annual Income</label>
+                  <input
+                    type="number"
+                    name="annual_income_bar"
+                    value={formData.annual_income_bar}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border rounded-md text-blue-800"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-blue-700">PIN Code</label>
+                  <input
+                    type="text"
+                    name="pin_code"
+                    value={formData.pin_code}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border rounded-md text-blue-800"
+                    required
+                  />
+                </div>
+                
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-blue-700">Marital Status</label>
+                  <input
+                    type="text"
+                    name="marital_status"
+                    value={formData.marital_status}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border rounded-md text-blue-800"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="mt-6 text-center">
+                <button
+                  type="submit"
+                  className="w-full bg-blue-700 text-white py-3 rounded-md hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 transform transition-all duration-300 hover:shadow-lg hover:shadow-blue-400"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          ) : (
+            <p className="text-lg text-red-700 font-semibold">User data not available</p>
+          )}
         </div>
       </section>
       <Footer />
