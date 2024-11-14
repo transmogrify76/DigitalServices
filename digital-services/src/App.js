@@ -9,6 +9,9 @@ import ElectricityAwareness from './pages/ElectricityAwareness';
 import FuelAwareness from './pages/FuelAwareness';
 import GasCylinderAwareness from './pages/GasCylinderAwareness';
 import Dashboard from './pages/Dashboard';
+import Profile from './pages/Profile';
+import EditProfile from './pages/EditProfile';
+
 
 const App = () => {
   return (
@@ -24,6 +27,10 @@ const App = () => {
         <Route path="/fuel" element={< FuelAwareness/>} />
         <Route path="/gas" element={< GasCylinderAwareness/>} />
         <Route path="/dashboard" element={< Dashboard/>} />
+        <Route path="/myprofile" element={< Profile/>} />
+        <Route path="/editprofile" element={< EditProfile/>} />
+
+
       </Routes>
     </Router>
   );

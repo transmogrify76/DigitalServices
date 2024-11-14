@@ -82,7 +82,7 @@ const Navbar = () => {
                 </button>
               )}
               {isLoggedIn && isDashboardPage && (
-                <Link to="/profile" className="w-full text-left py-2 px-6 rounded-md hover:bg-blue-600 flex items-center">
+                <Link to="/myprofile" className="w-full text-left py-2 px-6 rounded-md hover:bg-blue-600 flex items-center">
                   <img 
                     src="https://cdn-icons-png.flaticon.com/128/3237/3237472.png" 
                     alt="Profile" 
