@@ -24,7 +24,7 @@ const Navbar = () => {
         <div className="flex items-center space-x-3">
           <Link to="/home">
             <img
-              src="https://upload.wikimedia.org/wikipedia/en/thumb/6/66/Emblem_of_West_Bengal_%282018-present%29.svg/800px-Emblem_of_West_Bengal_%282018-present%29.svg.png"
+              src="https://images.squarespace-cdn.com/content/v1/5704fcea20c647241f7b52d3/1555413788254-TQ5XZ0RAI4I8MJL2M7MX/BEMS.png?format=1000w"
               alt="Government Logo"
               className="h-20"
             />
