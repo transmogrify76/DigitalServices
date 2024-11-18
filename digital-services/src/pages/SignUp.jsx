@@ -9,13 +9,8 @@ const SignUp = () => {
     email: "",
     password: "",
     phone_number: "",
-    aadhar_card_number: "",
-    pan: "",
     address: "",
     pin_code: "",
-    occupation: "",
-    annual_income_bar: "",
-    martial_status: "",
   });
 
   const navigate = useNavigate(); // Initialize navigate from useNavigate
