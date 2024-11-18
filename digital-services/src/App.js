@@ -11,6 +11,7 @@ import GasCylinderAwareness from './pages/GasCylinderAwareness';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import EditProfile from './pages/EditProfile';
+import QuestionnairePage from './pages/QuestionnairePage';
 
 
 const App = () => {
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/dashboard" element={< Dashboard/>} />
         <Route path="/myprofile" element={< Profile/>} />
         <Route path="/editprofile" element={< EditProfile/>} />
+        <Route path="/questions" element={< QuestionnairePage/>} />
 
 
       </Routes>

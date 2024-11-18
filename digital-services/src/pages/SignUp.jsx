@@ -69,7 +69,7 @@ const SignUp = () => {
           <h2 className="text-3xl font-bold text-center text-blue-800 mb-6">Create Your Account</h2>
           <div className="overflow-y-auto max-h-[450px]">
             <form onSubmit={handleSubmit} className="space-y-6">
-              {["name", "email", "password", "phone_number", "aadhar_card_number", "pan", "address", "pin_code", "occupation"].map((field) => (
+              {["name", "email", "password", "phone_number", "address", "pin_code",].map((field) => (
                 <div key={field}>
                   <label className="block text-sm font-medium text-blue-700 capitalize">{field.replace('_', ' ')}</label>
                   <input
@@ -82,34 +82,6 @@ const SignUp = () => {
                   />
                 </div>
               ))}
-              <div>
-                <label className="block text-sm font-medium text-blue-700">Annual Income</label>
-                <input
-                  type="number"
-                  name="annual_income_bar"
-                  value={formData.annual_income_bar}
-                  onChange={handleChange}
-                  className="w-full mt-1 p-3 border border-blue-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-blue-700">Marital Status</label>
-                <select
-                  name="martial_status"
-                  value={formData.martial_status}
-                  onChange={handleChange}
-                  className="w-full mt-1 p-3 border border-blue-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                  required
-                >
-                  <option value="">Select</option>
-                  <option value="Unmarried">Unmarried</option>
-                  <option value="Married">Married</option>
-                  <option value="Divorced">Divorced</option>
-                  <option value="Judicially Separated">Judicially Separated</option>
-                  <option value="Widowed">Widowed</option>
-                </select>
-              </div>
               <button
                 type="submit"
                 className="w-full bg-blue-700 text-white py-3 rounded-md hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"

@@ -71,6 +71,12 @@ const UserDashboard = () => {
     navigate(`/${energyType}`);
   };
 
+  // Function for handling "Answer Some Important Questions" button click
+  const handleImportantQuestionsClick = () => {
+    // Navigate or trigger a function for answering questions
+    navigate('/questions'); // Adjust route as needed
+  };
+
   return (
     <div className="bg-blue-50 min-h-screen">
       {/* Navbar */}
@@ -80,6 +86,16 @@ const UserDashboard = () => {
       <section className="bg-blue-900 text-white text-center py-24">
         <h2 className="text-4xl font-bold">Welcome to Your Dashboard</h2>
         <p className="mt-4 text-lg">Track your daily energy consumption and manage your resources efficiently.</p>
+
+         {/* Button to answer important questions */}
+         <div className="text-center mt-8">
+          <button 
+            onClick={handleImportantQuestionsClick}
+            className="bg-blue-800 text-white py-3 px-6 rounded-lg hover:bg-blue-900 transition duration-300"
+          >
+            Answer Some Important Questions
+          </button>
+        </div>
       </section>
 
       {/* User Stats Section */}
@@ -147,6 +163,7 @@ const UserDashboard = () => {
             </button>
           </div>
         </div>
+
       </section>
 
       {/* Recent Activities Section */}
