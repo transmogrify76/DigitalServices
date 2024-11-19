@@ -131,17 +131,7 @@ const EditProfile = () => {
                   />
                 </div>
                
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-blue-700">Occupation</label>
-                  <input
-                    type="text"
-                    name="occupation"
-                    value={formData.occupation}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border rounded-md text-blue-800"
-                    required
-                  />
-                </div>
+                
                 <div className="mb-4">
                   <label className="block text-sm font-medium text-blue-700">Address</label>
                   <input
@@ -153,35 +143,13 @@ const EditProfile = () => {
                     required
                   />
                 </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-blue-700">Annual Income</label>
-                  <input
-                    type="number"
-                    name="annual_income_bar"
-                    value={formData.annual_income_bar}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border rounded-md text-blue-800"
-                    required
-                  />
-                </div>
+                
                 <div className="mb-4">
                   <label className="block text-sm font-medium text-blue-700">PIN Code</label>
                   <input
                     type="text"
                     name="pin_code"
                     value={formData.pin_code}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border rounded-md text-blue-800"
-                    required
-                  />
-                </div>
-                
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-blue-700">Marital Status</label>
-                  <input
-                    type="text"
-                    name="marital_status"
-                    value={formData.marital_status}
                     onChange={handleChange}
                     className="w-full px-4 py-2 border rounded-md text-blue-800"
                     required

@@ -145,34 +145,19 @@ const Profile = () => {
                   <label className="block text-sm font-medium text-blue-700">Email</label>
                   <p className="text-lg text-blue-800 font-semibold">{user_data.email}</p>
                 </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-blue-700">Occupation</label>
-                  <p className="text-lg text-blue-800 font-semibold">{user_data.occupation}</p>
-                </div>
+                
                 <div className="mb-4">
                   <label className="block text-sm font-medium text-blue-700">Address</label>
                   <p className="text-lg text-blue-800 font-semibold">{user_data.address}</p>
                 </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-blue-700">Annual Income</label>
-                  <p className="text-lg text-blue-800 font-semibold">{user_data.annual_income_bar}</p>
-                </div>
+                
                 <div className="mb-4">
                   <label className="block text-sm font-medium text-blue-700">PIN Code</label>
                   <p className="text-lg text-blue-800 font-semibold">{user_data.pin_code}</p>
                 </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-blue-700">Aadhar Card Number</label>
-                  <p className="text-lg text-blue-800 font-semibold">{user_data.aadhar_card_number}</p>
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-blue-700">PAN</label>
-                  <p className="text-lg text-blue-800 font-semibold">{user_data.pan}</p>
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-blue-700">Marital Status</label>
-                  <p className="text-lg text-blue-800 font-semibold">{user_data.martial_status}</p>
-                </div>
+               
+               
+                
 
                 {/* Additional User Info */}
                 <div className="mb-4">
