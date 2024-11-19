@@ -4,11 +4,11 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const QuestionnairePage = () => {
-  const [questions, setQuestions] = useState([]);  // Initialize as empty array
+  const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({
-    one: 0,
-    two: 0,
-    three: 0,
+    one: "",
+    two: "",
+    three: "",
     four: false,
     five: false,
     six: false,
@@ -18,12 +18,12 @@ const QuestionnairePage = () => {
     ten: false,
     eleven: false,
     twelve: false,
-    thirteen: false,
+    thirteen: "",
     fourteen: 0,
     fifteen: false,
     sixteen: false,
     seventeen: "",
-    eighteen: 0,
+    eighteen: 0
   });
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -48,12 +48,11 @@ const QuestionnairePage = () => {
           if (response.ok) {
             const result = await response.json();
             if (result && result.questionnaire) {
-              // Convert the questionnaire object to an array
               const questionsArray = Object.entries(result.questionnaire).map(([key, value]) => ({
-                id: key,
+                id: key.toLowerCase(),
                 text: value,
               }));
-              setQuestions(questionsArray);  // Set the transformed questions array
+              setQuestions(questionsArray);
             } else {
               console.error("No questionnaire found in the response");
             }
@@ -80,26 +79,28 @@ const QuestionnairePage = () => {
 
   const handleSubmit = async () => {
     const token = localStorage.getItem("user");
-    const apiUrl = "http://127.0.0.1:8000/questionnaire/answer";
+    const apiUrl = "http://localhost:8000/questionnaire/answer";
+
+    // Construct the payload with answers in the exact required order
     const payload = {
-      one: answers.one,
-      two: answers.two,
-      three: answers.three,
-      four: answers.four,
-      five: answers.five,
-      six: answers.six,
-      seven: answers.seven,
-      eight: answers.eight,
-      nine: answers.nine,
-      ten: answers.ten,
-      eleven: answers.eleven,
-      twelve: answers.twelve,
-      thirteen: answers.thirteen,
-      fourteen: answers.fourteen,
-      fifteen: answers.fifteen,
-      sixteen: answers.sixteen,
-      seventeen: answers.seventeen,
-      eighteen: answers.eighteen,
+      "one": answers["one"],
+      "two": answers["two"],
+      "three": answers["three"],
+      "four": answers["four"],
+      "five": answers["five"],
+      "six": answers["six"],
+      "seven": answers["seven"],
+      "eight": answers["eight"],
+      "nine": answers["nine"],
+      "ten": answers["ten"],
+      "eleven": answers["eleven"],
+      "twelve": answers["twelve"],
+      "thirteen": answers["thirteen"],
+      "fourteen": answers["fourteen"],
+      "fifteen": answers["fifteen"],
+      "sixteen": answers["sixteen"],
+      "seventeen": answers["seventeen"],
+      "eighteen": answers["eighteen"]
     };
 
     try {
@@ -141,63 +142,65 @@ const QuestionnairePage = () => {
 
           {questions.length > 0 ? (
             <div>
-              {/* Displaying the Questions */}
-              {questions.map((question) => (
+              {questions.map((question, index) => (
                 <div key={question.id} className="mb-6">
-                  <label className="block text-sm font-medium text-blue-700">{question.text}</label>
-                  {/* Render different input types based on question */}
-                  {question.id === "four" || question.id === "five" || question.id === "six" || 
-                    question.id === "seven" || question.id === "eight" || question.id === "nine" ||
-                    question.id === "ten" || question.id === "eleven" || question.id === "twelve" || 
-                    question.id === "thirteen" || question.id === "fifteen" || question.id === "sixteen" ? (
-                    <input
-                      type="checkbox"
-                      checked={answers[question.id]}
-                      onChange={(e) => handleAnswerChange(question.id, e.target.checked)}
-                      className="w-6 h-6"
-                    />
-                  ) : question.id === "fourteen" ? (
-                    <input
-                      type="number"
-                      value={answers[question.id] || ""}
-                      onChange={(e) => handleAnswerChange(question.id, parseFloat(e.target.value))}
-                      className="w-full mt-2 p-3 border-2 border-blue-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-                      placeholder="Enter surface area in square units"
-                    />
+                  <label className="block text-sm font-medium text-blue-700">{`${index + 1}. ${question.text}`}</label>
+
+                  {/* Yes/No dropdown for specific questions (4 to 13, 15, 16) */}
+                  {(question.id === "four" ||
+                    question.id === "five" ||
+                    question.id === "six" ||
+                    question.id === "seven" ||
+                    question.id === "eight" ||
+                    question.id === "nine" ||
+                    question.id === "ten" ||
+                    question.id === "eleven" ||
+                    question.id === "twelve" ||
+                    question.id === "thirteen" ||
+                    question.id === "fifteen" ||
+                    question.id === "sixteen") ? (
+                    <select
+                      className="mt-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                      onChange={(e) => handleAnswerChange(question.id, e.target.value === "yes")}
+                    >
+                      <option value="">Select</option>
+                      <option value="true">Yes</option>
+                      <option value="false">No</option>
+                    </select>
                   ) : question.id === "seventeen" ? (
                     <select
-                      value={answers[question.id]}
+                      className="mt-2 px-4 py-2 border border-gray-300 rounded-md w-full"
                       onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                      className="w-full mt-2 p-3 border-2 border-blue-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                     >
                       <option value="">Select Month</option>
-                      <option value="January">January</option>
-                      <option value="February">February</option>
-                      {/* Add other months */}
+                      {["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"].map((month) => (
+                        <option key={month} value={month}>
+                          {month}
+                        </option>
+                      ))}
                     </select>
                   ) : (
                     <input
-                      type="number"
+                      type="text"
                       value={answers[question.id] || ""}
-                      onChange={(e) => handleAnswerChange(question.id, parseInt(e.target.value))}
-                      className="w-full mt-2 p-3 border-2 border-blue-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-                      placeholder="Enter a number"
+                      onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                      className="mt-2 px-4 py-2 border border-gray-300 rounded-md w-full"
+                      placeholder="Your answer"
                     />
                   )}
                 </div>
               ))}
             </div>
           ) : (
-            <p className="text-center text-xl text-red-600">Error loading questions</p>
+            <p className="text-gray-500">No questions available.</p>
           )}
 
-          {/* Submit Button */}
-          <div className="mt-6 text-center">
+          <div className="mt-8 flex justify-center">
             <button
-              className="w-full sm:w-auto bg-green-600 text-white py-3 px-8 rounded-full shadow-md hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 transform transition-all duration-300 hover:shadow-lg"
               onClick={handleSubmit}
+              className="px-6 py-3 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700"
             >
-              Submit Answers
+              Submit
             </button>
           </div>
         </div>
