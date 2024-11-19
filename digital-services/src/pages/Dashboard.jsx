@@ -64,6 +64,10 @@ const UserDashboard = () => {
     navigate('/questions');
   };
 
+  const handleSubmitDataClick = () => {
+    navigate('/submitdata'); // Add your desired route here
+  };
+
   return (
     <div className="bg-gray-100 min-h-screen">
       <Navbar />
@@ -75,12 +79,20 @@ const UserDashboard = () => {
           <p className="text-lg max-w-2xl mx-auto">
             Monitor, analyze, and optimize your energy consumption for a sustainable future.
           </p>
-          <button
-            onClick={handleImportantQuestionsClick}
-            className="mt-8 bg-white text-blue-800 py-3 px-8 rounded-lg shadow-lg hover:bg-gray-100 transition duration-300"
-          >
-            Answer Questions
-          </button>
+          <div className="mt-8 flex justify-center gap-4">
+            <button
+              onClick={handleImportantQuestionsClick}
+              className="bg-white text-blue-800 py-3 px-8 rounded-lg shadow-lg hover:bg-gray-100 transition duration-300"
+            >
+              Answer Questions
+            </button>
+            <button
+              onClick={handleSubmitDataClick}
+              className="bg-white text-blue-800 py-3 px-8 rounded-lg shadow-lg hover:bg-gray-100 transition duration-300"
+            >
+              Submit Your Last 2 Months Data
+            </button>
+          </div>
         </div>
         <div className="absolute bottom-0 left-0 w-full h-20 bg-white rounded-tl-full rounded-tr-full"></div>
       </section>
@@ -90,7 +102,7 @@ const UserDashboard = () => {
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold text-center text-blue-800 mb-10">Your Energy Usage Overview</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
+            {[ 
               { title: 'Water Usage', value: `${userStats.energyStats.water} Liters`, icon: <FaWater />, bgColor: 'bg-blue-200' },
               { title: 'Electricity Usage', value: `${userStats.energyStats.electricity} kWh`, icon: <FaBolt />, bgColor: 'bg-orange-200' },
               { title: 'Fuel Usage', value: `${userStats.energyStats.fuel} Liters`, icon: <FaGasPump />, bgColor: 'bg-yellow-200' },

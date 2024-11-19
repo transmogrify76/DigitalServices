@@ -12,6 +12,7 @@ import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import EditProfile from './pages/EditProfile';
 import QuestionnairePage from './pages/QuestionnairePage';
+import SubmitData from './pages/SubmitData';
 
 
 const App = () => {
@@ -31,6 +32,7 @@ const App = () => {
         <Route path="/myprofile" element={< Profile/>} />
         <Route path="/editprofile" element={< EditProfile/>} />
         <Route path="/questions" element={< QuestionnairePage/>} />
+        <Route path="/submitdata" element={< SubmitData/>} />
 
 
       </Routes>
