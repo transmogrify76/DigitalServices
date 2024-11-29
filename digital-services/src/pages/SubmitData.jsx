@@ -6,63 +6,126 @@ import Footer from '../components/Footer';
 const SubmitData = () => {
   const navigate = useNavigate();
 
+  const [consumptionType, setConsumptionType] = useState('');
   const [formData, setFormData] = useState({
     month: '',
     year: '',
-    waterConsumption: '',
-    electricityConsumption: '',
-    fuelConsumption: '',
-    gasConsumption: '',
+    consumption: '',
   });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Utility to retrieve the token
+  const getToken = () => {
+    try {
+      const token = localStorage.getItem('user'); 
+      if (!token) {
+        console.error('Token not found in localStorage');
+        return null;
+      }
+      return token; // Directly return the token
+    } catch (error) {
+      console.error('Error retrieving token from localStorage:', error);
+      return null;
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
+  };
+
+  const handleTypeChange = (e) => {
+    setConsumptionType(e.target.value);
+    if (formData.consumption || formData.month || formData.year) {
+      setFormData({ month: '', year: '', consumption: '' });
+    }
+  };
+
+  const validateInputs = () => {
+    const { year, consumption } = formData;
+    const currentYear = new Date().getFullYear();
+
+    if (!year || parseInt(year, 10) < 2000 || parseInt(year, 10) > currentYear + 5) {
+      alert('Please enter a valid year.');
+      return false;
+    }
+
+    if (!consumption || parseFloat(consumption) <= 0) {
+      alert('Please enter a valid consumption amount.');
+      return false;
+    }
+
+    return true;
   };
 
   const handleSubmit = async (e) => {
-    
     e.preventDefault();
+    if (!validateInputs()) return;
+
     setIsSubmitting(true);
-  
-    const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage
-    const apiKey = process.env.REACT_APP_API_KEY; // API key stored in .env file
-  
-    const payload = {
-      month: formData.month,
-      year: parseInt(formData.year, 10), // Ensuring the year is sent as a number
-    };
-  
+
     try {
-      const response = await fetch('http://localhost:8000/consumption/electricity', {
+      const token = getToken(); 
+      if (!token) {
+        alert('User is not authenticated. Please log in again.');
+        navigate('/login');
+        return;
+      }
+
+      const apiKey = process.env.REACT_APP_API_KEY || '';
+      if (!apiKey) {
+        alert('API key is missing. Please configure your environment variables.');
+        return;
+      }
+
+      const endpointMap = {
+        electricity: '/consumption/electricity',
+        gas: '/consumption/gas',
+        water: '/consumption/water',
+        fuel: '/consumption/fuel',
+      };
+
+      const apiEndpoint = endpointMap[consumptionType];
+      if (!apiEndpoint) {
+        alert('Please select a valid consumption type.');
+        return;
+      }
+
+      const payload = {
+        month: formData.month,
+        year: parseInt(formData.year, 10),
+        consumption: parseFloat(formData.consumption),
+      };
+
+      const response = await fetch(`http://localhost:8000${apiEndpoint}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`, // Include the token here
           'API-Key': apiKey,
         },
         body: JSON.stringify(payload),
       });
-  
+
       if (response.ok) {
-        alert('Data submitted successfully!');
+        alert(
+          `${consumptionType.charAt(0).toUpperCase() + consumptionType.slice(1)} data submitted successfully!`
+        );
         navigate('/dashboard');
       } else {
         const errorData = await response.json();
         alert(`Error: ${errorData.message}`);
       }
     } catch (error) {
-      alert('An error occurred while submitting data. Please try again.');
+      console.error('Submission error:', error);
+      alert(`An error occurred: ${error.message}. Please try again.`);
     } finally {
       setIsSubmitting(false);
     }
   };
-  
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -76,9 +139,30 @@ const SubmitData = () => {
 
           <div className="h-[400px] overflow-y-auto">
             <form onSubmit={handleSubmit}>
+              {/* Consumption Type */}
+              <div className="mb-4">
+                <label htmlFor="consumptionType" className="block text-gray-700 font-medium mb-2">
+                  Consumption Type
+                </label>
+                <select
+                  id="consumptionType"
+                  value={consumptionType}
+                  onChange={handleTypeChange}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  required
+                >
+                  <option value="">Select Type</option>
+                  {['electricity', 'gas', 'water', 'fuel'].map((type) => (
+                    <option key={type} value={type}>
+                      {type.charAt(0).toUpperCase() + type.slice(1)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               {/* Month */}
               <div className="mb-4">
-                <label className="block text-gray-700 font-medium mb-2" htmlFor="month">
+                <label htmlFor="month" className="block text-gray-700 font-medium mb-2">
                   Month
                 </label>
                 <select
@@ -113,7 +197,7 @@ const SubmitData = () => {
 
               {/* Year */}
               <div className="mb-4">
-                <label className="block text-gray-700 font-medium mb-2" htmlFor="year">
+                <label htmlFor="year" className="block text-gray-700 font-medium mb-2">
                   Year
                 </label>
                 <input
@@ -128,84 +212,36 @@ const SubmitData = () => {
                 />
               </div>
 
-              {/* Water Consumption */}
-              {/* <div className="mb-4">
-                <label className="block text-gray-700 font-medium mb-2" htmlFor="waterConsumption">
-                  Water Consumption (Liters)
-                </label>
-                <input
-                  type="number"
-                  id="waterConsumption"
-                  name="waterConsumption"
-                  value={formData.waterConsumption}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
-                  placeholder="Enter water consumption"
-                  required
-                />
-              </div> */}
-
-              {/* Electricity Consumption */}
+              {/* Consumption */}
               <div className="mb-4">
-                <label className="block text-gray-700 font-medium mb-2" htmlFor="electricityConsumption">
-                  Electricity Consumption (units)
+                <label htmlFor="consumption" className="block text-gray-700 font-medium mb-2">
+                  {consumptionType
+                    ? `${consumptionType.charAt(0).toUpperCase() + consumptionType.slice(1)} Consumption`
+                    : 'Consumption'}
                 </label>
                 <input
                   type="number"
-                  id="electricityConsumption"
-                  name="electricityConsumption"
-                  value={formData.electricityConsumption}
+                  id="consumption"
+                  name="consumption"
+                  value={formData.consumption}
                   onChange={handleChange}
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
-                  placeholder="Enter electricity consumption"
+                  placeholder={`Enter ${consumptionType || 'consumption'} amount`}
                   required
+                  min="0"
                 />
               </div>
-
-              {/* Fuel Consumption */}
-              {/* <div className="mb-4">
-                <label className="block text-gray-700 font-medium mb-2" htmlFor="fuelConsumption">
-                  Fuel Consumption (Liters)
-                </label>
-                <input
-                  type="number"
-                  id="fuelConsumption"
-                  name="fuelConsumption"
-                  value={formData.fuelConsumption}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
-                  placeholder="Enter fuel consumption"
-                  required
-                />
-              </div> */}
-
-              {/* Gas Consumption */}
-              {/* <div className="mb-4">
-                <label className="block text-gray-700 font-medium mb-2" htmlFor="gasConsumption">
-                  Gas Consumption (m³)
-                </label>
-                <input
-                  type="number"
-                  id="gasConsumption"
-                  name="gasConsumption"
-                  value={formData.gasConsumption}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
-                  placeholder="Enter gas consumption"
-                  required
-                />
-              </div> */}
 
               {/* Submit Button */}
               <div className="text-center">
                 <button
                   type="submit"
                   className={`bg-blue-600 text-white py-2 px-4 rounded-lg shadow-lg transition duration-300 ${
-                    isSubmitting ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700'
+                    isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
                   }`}
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Submitting...' : 'Submit Data'}
+                  {isSubmitting ? 'Submitting...' : 'Submit'}
                 </button>
               </div>
             </form>

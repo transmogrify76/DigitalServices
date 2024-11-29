@@ -92,6 +92,18 @@ const UserDashboard = () => {
             >
               Submit Your Last 2 Months Data
             </button>
+            <button
+              onClick={handleSubmitDataClick}
+              className="bg-white text-blue-800 py-3 px-8 rounded-lg shadow-lg hover:bg-gray-100 transition duration-300"
+            >
+              Add this months data
+            </button>
+            <button
+              onClick={handleSubmitDataClick}
+              className="bg-white text-blue-800 py-3 px-8 rounded-lg shadow-lg hover:bg-gray-100 transition duration-300"
+            >
+              Add your todays usage
+            </button>
           </div>
         </div>
         <div className="absolute bottom-0 left-0 w-full h-20 bg-white rounded-tl-full rounded-tr-full"></div>

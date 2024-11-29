@@ -9,8 +9,8 @@ const Navbar = () => {
   // Check login status and set isLoggedIn state
   useEffect(() => {
     const userToken = localStorage.getItem('user');
-    console.log('User Token:', userToken);  // Log user token to check if it exists
-    console.log('Current Path:', location.pathname);  // Log current path for debugging
+    // console.log('User Token:', userToken);  // Log user token to check if it exists
+    // console.log('Current Path:', location.pathname);  // Log current path for debugging
     setIsLoggedIn(!!userToken);  // Set isLoggedIn to true if userToken exists, false otherwise
   }, [location.pathname]);
 
